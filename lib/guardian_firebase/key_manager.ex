@@ -97,9 +97,22 @@ defmodule GuardianFirebase.KeyManager do
     Enum.each(expired_keys, &:ets.delete(:firebase_keys, &1))
   end
 
-  defp set_reload_from_header(headers) do
-    "Cache-Control"
-    |> :proplists.get_value(headers)
+  defp set_reload_from_header(headers) when is_list(headers) do
+    possible_headers = ["Cache-Control", "cache-control"]
+
+    Enum.take_while(possible_headers, fn h ->
+      case :proplists.get_value(h, headers) do
+        nil ->
+          true
+        header ->
+          set_reload_from_header(header)
+          false
+      end
+    end)
+  end
+
+  defp set_reload_from_header(header) do
+    header
     |> String.split(", ")
     |> Enum.find(&String.match?(&1, ~r/max-age=.*/))
     |> String.split("=")
