@@ -102,7 +102,7 @@ defmodule GuardianFirebase.KeyManager do
 
     Enum.take_while(possible_headers, fn h ->
       case :proplists.get_value(h, headers) do
-        nil ->
+        :undefined ->
           true
         header ->
           set_reload_from_header(header)
