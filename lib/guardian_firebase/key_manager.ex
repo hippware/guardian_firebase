@@ -5,8 +5,6 @@ defmodule GuardianFirebase.KeyManager do
 
   use GenServer
 
-  alias Poison.Parser
-
   require Logger
 
   @key_url "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
@@ -69,7 +67,7 @@ defmodule GuardianFirebase.KeyManager do
     {:ok, body} = :hackney.body(client)
 
     body
-    |> Parser.parse!()
+    |> Poison.decode!()
     |> load_keys()
     |> remove_old_keys()
 
