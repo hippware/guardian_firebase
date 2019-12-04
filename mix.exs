@@ -4,7 +4,7 @@ defmodule GuardianFirebase.MixProject do
   def project do
     [
       app: :guardian_firebase,
-      version: "0.2.1",
+      version: "1.0.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -44,8 +44,10 @@ defmodule GuardianFirebase.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:guardian, "~> 1.0"},
+      {:guardian, "~> 2.0"},
+      {:guardian_phoenix, "~> 2.0"},
       {:hackney, "~> 1.11"},
+      {:poison, "~> 3.0 or ~> 4.0"},
       {:dialyxir, "~> 0.5", only: :dev},
       {:credo, "~> 0.8", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev},
